@@ -18,13 +18,19 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # Helm Repo Update
 helm repo update
 
+#Prereqs f k3s
+export KUBECONFIG=~/.kube/config
+mkdir ~/.kube 2> /dev/null
+sudo k3s kubectl config view --raw > "$KUBECONFIG"
+chmod 600 "$KUBECONFIG"
+
+# Install k3s with Traefik disabled
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
+
 # Create Namespaces
 kubectl create ns kubeinvaders
 kubectl create ns namespace1
 kubectl create ns namespace2
-
-# Install k3s with Traefik disabled
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
 
 # Ingress-Nginx Configuration
 cat >/tmp/ingress-nginx.yaml <<EOF
@@ -66,9 +72,6 @@ EOF
 # Apply Ingress-Nginx Configuration
 kubectl create -f /tmp/ingress-nginx.yaml
 
-# Set KUBECONFIG again
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-
 # Install KubeInvaders Helm Chart
 helm install kubeinvaders --set-string config.target_namespace="namespace1\,namespace2" \
 -n kubeinvaders kubeinvaders/kubeinvaders --set ingress.enabled=true --set ingress.hostName=kubeinvaders.io --set deployment.image.tag=v1.9.6
@@ -100,7 +103,7 @@ EOF
 kubectl apply -f deployment.yaml -n namespace1
 
 # Scale Nginx Deployment in namespace1
-kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1
+#kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1
 
 # Scale Nginx Deployment in namespace1 further (Warning: high CPU Usage)
-kubectl scale deployment.apps/nginx-deployment --replicas=200 -n namespace1
+#kubectl scale deployment.apps/nginx-deployment --replicas=200 -n namespace1
