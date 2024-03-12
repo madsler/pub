@@ -4,7 +4,10 @@
 
 
 #!/bin/bash
-
+# install Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | DESIRED_VERSION=v3.13.3 bash
+# install k9s
+curl -sS https://webinstall.dev/k9s | bash
 # Helm Repositories
 helm repo add kubeinvaders https://lucky-sideburn.github.io/helm-charts/
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
