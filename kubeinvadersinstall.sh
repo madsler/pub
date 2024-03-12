@@ -20,10 +20,15 @@ helm repo update
 
 #Prereqs f k3s
 export KUBECONFIG=~/.kube/config
-mkdir ~/.kube 2> /dev/null
-sudo k3s kubectl config view --raw > "$KUBECONFIG"
-chmod 600 "$KUBECONFIG"
+sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && chown $USER ~/.kube/config && chmod 600 ~/.kube/config && export KUBECONFIG=~/.kube/config
+#mkdir ~/.kube 2> /dev/null
+#sudo k3s kubectl config view --raw > "$KUBECONFIG"
+#chmod 600 "$KUBECONFIG"
 
+# install brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+#install k9s 
 # Install k3s with Traefik disabled
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
 
