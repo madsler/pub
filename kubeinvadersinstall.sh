@@ -19,8 +19,7 @@ helm repo update
 #eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # install k9s
-curl -sS https://webinstall.dev/k9s | bash
-source ~/.config/envman/PATH.env
+curl -sS https://webinstall.dev/k9s | bash && source ~/.config/envman/PATH.env
 #brew install derailed/k9s/k9s
 
 # Install k3s with Traefik disabled
@@ -105,8 +104,13 @@ EOF
 sudo kubectl apply -f deployment.yaml -n namespace1
 sudo kubectl apply -f deployment.yaml -n namespace2
 
-# Scale Nginx Deployment in namespace1
-#kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1
-
-# Scale Nginx Deployment in namespace1 further (Warning: high CPU Usage)
-#kubectl scale deployment.apps/nginx-deployment --replicas=200 -n namespace1
+echo '######################################'
+echo '######################################'
+echo '## Installation abgeschlossen ########
+echo '## DNS Eintrag setzen auf diesen #####'
+echo '## Host fuer "kubeinvaders.io" #######'
+echo '## folgendes Beispiel skaliert die ###'
+echo '## Aliens/Pods für Namespace1: #######'
+echo '######################################'
+echo '######################################'
+echo 'kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1'
