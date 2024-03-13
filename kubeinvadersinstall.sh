@@ -39,9 +39,9 @@ chmod 600 ~/.kube/config
 #export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # Create Namespaces
-kubectl create ns kubeinvaders
-kubectl create ns namespace1
-kubectl create ns namespace2
+sudo kubectl create ns kubeinvaders
+sudo kubectl create ns namespace1
+sudo kubectl create ns namespace2
 
 # Ingress-Nginx Configuration
 cat >/tmp/ingress-nginx.yaml <<EOF
