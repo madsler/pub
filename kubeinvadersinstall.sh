@@ -6,8 +6,10 @@
 #!/bin/bash
 # install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | DESIRED_VERSION=v3.13.3 bash
+
 # install k9s
 curl -sS https://webinstall.dev/k9s | bash
+
 # Helm Repositories
 helm repo add kubeinvaders https://lucky-sideburn.github.io/helm-charts/
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -19,8 +21,8 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 helm repo update
 
 #Prereqs f k3s
-export KUBECONFIG=~/.kube/config
-sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && chown $USER ~/.kube/config && chmod 600 ~/.kube/config && export KUBECONFIG=~/.kube/config
+#export KUBECONFIG=~/.kube/config
+#sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && chown $USER ~/.kube/config && chmod 600 ~/.kube/config && export KUBECONFIG=~/.kube/config
 #mkdir ~/.kube 2> /dev/null
 #sudo k3s kubectl config view --raw > "$KUBECONFIG"
 #chmod 600 "$KUBECONFIG"
@@ -28,9 +30,12 @@ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && chown $USER ~/.kube/config &
 # install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-#install k9s 
 # Install k3s with Traefik disabled
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
+mkdir ~/.kube
+sudo k3s kubectl config view --raw | tee ~/.kube/config
+chmod 600 ~/.kube/config
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # Create Namespaces
 kubectl create ns kubeinvaders
@@ -106,6 +111,7 @@ EOF
 
 # Apply Nginx Deployment in namespace1
 kubectl apply -f deployment.yaml -n namespace1
+kubectl apply -f deployment.yaml -n namespace2
 
 # Scale Nginx Deployment in namespace1
 #kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1
