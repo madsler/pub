@@ -14,13 +14,14 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
 # install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/server/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/server/.bashrc
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # install k9s
-#curl -sS https://webinstall.dev/k9s | bash
-brew install derailed/k9s/k9s
+curl -sS https://webinstall.dev/k9s | bash
+source ~/.config/envman/PATH.env
+#brew install derailed/k9s/k9s
 
 # Install k3s with Traefik disabled
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
