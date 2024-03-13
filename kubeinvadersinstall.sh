@@ -7,15 +7,12 @@
 # install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | DESIRED_VERSION=v3.13.3 bash
 
-# install k9s
-curl -sS https://webinstall.dev/k9s | bash
-
 # Helm Repositories
 helm repo add kubeinvaders https://lucky-sideburn.github.io/helm-charts/
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 # Set KUBECONFIG
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+#export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # Helm Repo Update
 helm repo update
@@ -30,12 +27,16 @@ helm repo update
 # install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+# install k9s
+#curl -sS https://webinstall.dev/k9s | bash
+brew install derailed/k9s/k9s
+
 # Install k3s with Traefik disabled
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
 mkdir ~/.kube
 sudo k3s kubectl config view --raw | tee ~/.kube/config
 chmod 600 ~/.kube/config
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+#export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # Create Namespaces
 kubectl create ns kubeinvaders
