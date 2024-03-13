@@ -1,6 +1,6 @@
 #Install k3s w/o traefik, install kubinvaders, example of scaling in ns1
 #pre: DNS entry for ingress to kubeinvaders.io
-#
+# 
 
 
 #!/bin/bash
