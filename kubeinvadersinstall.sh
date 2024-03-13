@@ -13,14 +13,9 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 # Helm Repo Update
 helm repo update
 
-# install brew
-#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/server/.bashrc
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # install k9s
-curl -sS https://webinstall.dev/k9s | bash && source ~/.config/envman/PATH.env
-#brew install derailed/k9s/k9s
+curl -sS https://webinstall.dev/k9s | bash
+rm -r Downloads/
 
 # Install k3s with Traefik disabled
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
@@ -100,17 +95,17 @@ spec:
         - containerPort: 81
 EOF
 
-# Apply Nginx Deployment in namespace1
+# Apply Nginx Deployment in namespace1 and namespace2
 sudo kubectl apply -f deployment.yaml -n namespace1
 sudo kubectl apply -f deployment.yaml -n namespace2
 
+source ~/.config/envman/PATH.env
+
 echo '######################################'
 echo '######################################'
-echo '## Installation abgeschlossen ########
+echo '## Installation abgeschlossen ########'
 echo '## DNS Eintrag setzen auf diesen #####'
 echo '## Host fuer "kubeinvaders.io" #######'
-echo '## folgendes Beispiel skaliert die ###'
-echo '## Aliens/Pods für Namespace1: #######'
 echo '######################################'
 echo '######################################'
 echo 'kubectl scale deployment.apps/nginx-deployment --replicas=20 -n namespace1'
